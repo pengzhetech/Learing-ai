@@ -11,6 +11,7 @@
     <name>SpringAIA-Maven父工程POM配置</name>
     <modules>
         <module>hello-word</module>
+        <module>ollama</module>
     </modules>
 
     <properties>
