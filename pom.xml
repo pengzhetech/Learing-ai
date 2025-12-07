@@ -12,6 +12,7 @@
     <modules>
         <module>hello-word</module>
         <module>ollama</module>
+        <module>chat-client</module>
     </modules>
 
     <properties>
