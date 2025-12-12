@@ -25,6 +25,7 @@
         <module>tool-calling</module>
         <module>local-mcp-server</module>
         <module>local-mcp-client</module>
+        <module>mcp</module>
     </modules>
 
     <properties>
