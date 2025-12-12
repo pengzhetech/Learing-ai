@@ -26,6 +26,7 @@
         <module>local-mcp-server</module>
         <module>local-mcp-client</module>
         <module>mcp</module>
+        <module>bailian-rag</module>
     </modules>
 
     <properties>
