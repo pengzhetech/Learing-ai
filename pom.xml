@@ -27,6 +27,7 @@
         <module>local-mcp-client</module>
         <module>mcp</module>
         <module>bailian-rag</module>
+        <module>ai-agent</module>
     </modules>
 
     <properties>
