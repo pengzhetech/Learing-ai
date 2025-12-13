@@ -20,14 +20,12 @@ import reactor.core.publisher.Flux;
  */
 
 @RestController
-public class ToolCallingController
-{
+public class ToolCallingController {
     @Resource
     private ChatModel chatModel;
 
     @GetMapping("/toolcall/chat")
-    public String chat(@RequestParam(name = "msg",defaultValue = "你是谁现在几点") String msg)
-    {
+    public String chat(@RequestParam(name = "msg", defaultValue = "你是谁现在几点") String msg) {
         // 1.工具注册到工具集合里
         ToolCallback[] tools = ToolCallbacks.from(new DateTimeTools());
 
@@ -44,12 +42,14 @@ public class ToolCallingController
     @Resource
     private ChatClient chatClient;
 
+    /**
+     * http://localhost:8013/toolcall/chat2
+     *
+     * @param msg
+     * @return
+     */
     @GetMapping("/toolcall/chat2")
-    public Flux<String> chat2(@RequestParam(name = "msg",defaultValue = "你是谁现在几点") String msg)
-    {
-        return chatClient.prompt(msg)
-                .tools(new DateTimeTools())
-                .stream()
-                .content();
+    public Flux<String> chat2(@RequestParam(name = "msg", defaultValue = "你是谁现在几点现在天气怎么样彭哲做什么工作的") String msg) {
+        return chatClient.prompt(msg).tools(new DateTimeTools(), new WeatherTools()).stream().content();
     }
 }
