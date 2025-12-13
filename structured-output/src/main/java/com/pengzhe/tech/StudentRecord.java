@@ -4,4 +4,5 @@ package com.pengzhe.tech;
  * @create 2025-09-08 16:53
  * @Description jdk14以后的新特性，记录类record = entity + lombok
  */
-public record StudentRecord(String id, String sname,String major,String email) { }
+public record StudentRecord(String id, String sname, String major, String email) {
+}
