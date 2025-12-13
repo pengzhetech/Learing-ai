@@ -1,12 +1,19 @@
 package com.pengzhe.tech;
 
+import io.modelcontextprotocol.client.McpAsyncClient;
+import io.modelcontextprotocol.spec.McpSchema;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @auther zzyybs@126.com
@@ -45,6 +52,24 @@ public class McpClientCallBaiDuMcpController {
     @RequestMapping("/mcp/chat2")
     public Flux<String> chat2(String msg) {
         return chatModel.stream(msg);
+    }
+
+    @Autowired
+    List<McpAsyncClient> mcpAsyncClients;
+
+    @RequestMapping("/test")
+    public Mono<McpSchema.CallToolResult> test() {
+        var mcpClient = mcpAsyncClients.get(0);
+
+        return mcpClient.listTools()
+                .flatMap(tools -> {
+                    return mcpClient.callTool(
+                            new McpSchema.CallToolRequest(
+                                    "maps_weather",
+                                    Map.of("city", "北京")
+                            )
+                    );
+                });
     }
 }
 
