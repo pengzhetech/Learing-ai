@@ -14,24 +14,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @auther zzyybs@126.com
  * @create 2025-07-25 18:53
  * @Description ChatModel+ChatClient+多模型共存
  */
 @Configuration
-public class SaaLLMConfig
-{
+public class SaaLLMConfig {
     // 模型名称常量定义
     private final String DEEPSEEK_MODEL = "deepseek-v3";
     private final String QWEN_MODEL = "qwen-plus";
 
     @Bean(name = "deepseek")
-    public ChatModel deepSeek()
-    {
+    public ChatModel deepSeek() {
         return DashScopeChatModel.builder()
-                        .dashScopeApi(DashScopeApi.builder()
-                                    .apiKey("sk-4baafe3feb254b13bb9ef4b750e0bb1d")
-                                .build())
+                .dashScopeApi(DashScopeApi.builder()
+                        .apiKey("sk-4baafe3feb254b13bb9ef4b750e0bb1d")
+                        .build())
                 .defaultOptions(
                         DashScopeChatOptions.builder().withModel(DEEPSEEK_MODEL).build()
                 )
@@ -39,8 +36,7 @@ public class SaaLLMConfig
     }
 
     @Bean(name = "qwen")
-    public ChatModel qwen()
-    {
+    public ChatModel qwen() {
         return DashScopeChatModel.builder().dashScopeApi(DashScopeApi.builder()
                         .apiKey("sk-4baafe3feb254b13bb9ef4b750e0bb1d")
                         .build())
@@ -54,29 +50,27 @@ public class SaaLLMConfig
 
     @Bean(name = "qwenChatClient")
     public ChatClient qwenChatClient(@Qualifier("qwen") ChatModel qwen,
-                                     RedisChatMemoryRepository redisChatMemoryRepository)
-    {
+                                     RedisChatMemoryRepository redisChatMemoryRepository) {
         MessageWindowChatMemory windowChatMemory = MessageWindowChatMemory.builder()
-                            .chatMemoryRepository(redisChatMemoryRepository)
-                            .maxMessages(10)
-                        .build();
+                .chatMemoryRepository(redisChatMemoryRepository)
+                .maxMessages(10)
+                .build();
 
         return ChatClient.builder(qwen)
-                    .defaultOptions(ChatOptions.builder().model(QWEN_MODEL).build())
-                    .defaultAdvisors(MessageChatMemoryAdvisor.builder(windowChatMemory).build())
+                .defaultOptions(ChatOptions.builder().model(QWEN_MODEL).build())
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(windowChatMemory).build())
                 .build();
     }
 
 
-
     /**
      * 家庭作业，按照上述模范qwen完成基于deepseek的模型存储
+     *
      * @param deepSeek
      * @return
      */
     @Bean(name = "deepseekChatClient")
-    public ChatClient deepseekChatClient(@Qualifier("deepseek") ChatModel deepSeek)
-    {
+    public ChatClient deepseekChatClient(@Qualifier("deepseek") ChatModel deepSeek) {
         return ChatClient.builder(deepSeek)
                 .defaultOptions(ChatOptions.builder()
                         .model(DEEPSEEK_MODEL)

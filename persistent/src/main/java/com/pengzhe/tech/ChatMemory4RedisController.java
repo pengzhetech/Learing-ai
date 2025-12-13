@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 
 /**
- * @auther zzyybs@126.com
  * @create 2025-07-28 18:40
  * @Description TODO
  */
